@@ -35,8 +35,68 @@ function stringify(obj, indent) {
 	return w + strings.join("\n" + w) + "\n"; 
 }
 
-function guessType(name) {
-	return "any"; 
+function guessParamType(name) {
+	switch(name) {
+		case "m00": case "m01": case "m02": case "m03": 
+		case "m10": case "m11": case "m12": case "m13": 
+		case "m20": case "m21": case "m22": case "m23": 
+		case "m30": case "m31": case "m32": case "m33": 
+		case "top": case "bottom": case "left": case "right": 
+		case "near": case "far": case "znear": 
+		case "angle": case "fovy":  
+		case "aspect": case "number": 
+		case "x": case "y": case "z": case "w": 
+		case "scalar": case "lerp": case "slerp": 
+		case "val": 
+		return "number"; 
+
+		case "mat": case "mat1": case "mat2": 
+		case "matrix": case "matA": case "matB": 
+		case "dest" : case "src": 
+		case "a": case "b": 
+		case "vec": case "vector": 
+		case "vec1": case "vec2": 
+		case "vecA": case "vecB": 
+		case "up": case "center": case "eye": 
+		case "axis": case "quat": 
+		case "view": case "proj": 
+		case "viewport": case "quat2": 
+		return "Float32Array"; 
+
+		default: 
+		return "any"; 
+	}
+}
+
+function guessParamIsOptional(name) {
+	switch(name) {
+		case "dest": 
+		case "src": 
+		return true; 
+
+		default: 
+		return false; 
+	}
+}
+
+function guessFuncReturnType(name) {
+	switch(name) {
+		case "str": 
+		return "string"; 
+
+		case "equal": 
+		return "bool"; 
+
+		case "length": 
+		case "squaredLength": 
+		case "dot": 
+		case "dist": 
+		case "determinant": 
+		return "number"; 
+
+		default: 
+		return "Float32Array"; 
+	}
 }
 
 function printFunctionBody(name, func) {
@@ -54,15 +114,18 @@ function printFunctionBody(name, func) {
 		throw new Error("func is not a function"); 
 	}
 
-	var params = f[2];
-	var paramTypes = params.map(guessType); 
+	var params     = f[2];
+	var paramTypes = params.map(guessParamType); 
+	var optionals  = params.map(guessParamIsOptional); 
+	var funcReturn = guessFuncReturnType(name); 
 
 	var paramsWithTypes = []; 
 	for(var i = 0; i < params.length; i++) {
-		paramsWithTypes[i] = params[i] + " : " + paramTypes[i]; 
+		var optional = optionals[i] ? " ?: " : " : "; 
+		paramsWithTypes[i] = params[i] + optional + paramTypes[i]; 
 	}
 
-	return name + "(" + paramsWithTypes.join(", ") + ") : Float32Array;"; 
+	return name + "(" + paramsWithTypes.join(", ") + ") : "+ funcReturn +";"; 
 }
 
 function printModule(name, obj, indent) {
@@ -88,6 +151,7 @@ try {
 	tree.push( printModule("quat4", glm.quat4, 0) ); 
 } catch(e) {
 	console.error(JSON.stringify(e)); 
+	throw e; 
 }
 
 console.log(tree.join("\n")); 
