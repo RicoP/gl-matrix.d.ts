@@ -1,0 +1,2 @@
+#!/bin/sh
+node src/printdoc.js > gl-matrix.d.ts

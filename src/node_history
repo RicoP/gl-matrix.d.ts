@@ -1,0 +1,64 @@
+var parser = require("./parse-js.js")
+parser.parse("function foo() {}")
+parser.parse("function() {}")
+ls
+function foo() {}
+foo.name
+var glm = require("./gl-matrix.js")
+var parser = require("./parse-js.js")
+_
+var glm = require("./gl-matrix.js")
+var parser = require("./parse-js.js")
+function stringify(obj) {
+        var strings = []; 
+        for(var k in obj) { 
+                if(obj.hasOwnProperty(k)) {
+                        if(typeof obj[k] === "function") {
+                                strings.push( 
+                                        printFunctionBody(k, obj[k]) 
+                                );
+                        }
+                        else {
+                                strings.push(
+                                        printModule(k, obj[k])
+                                ); 
+                        }
+                }
+        }
+        return strings.join("\n"); 
+}
+function printFunctionBody(name, func) {
+        var source = func.toString(); 
+        if(func.name === "") {
+                //single toplevel functions without a name are not allowed in JS 
+                //https://github.com/mishoo/UglifyJS/issues/468
+                source = source.replace(/function/, "function x");
+        }
+        return "  func " + name + ";"; 
+}
+function printModule(name, obj) {
+        return "module " + name + " {\n" + 
+               stringify(obj) + 
+                   "\n}\n\n"; 
+}
+function printFunctionBody(name, func) {
+        var source = func.toString(); 
+        if(func.name === "") {
+                //single toplevel functions without a name are not allowed in JS 
+                //https://github.com/mishoo/UglifyJS/issues/468
+                source = source.replace(/function/, "function x");
+        }
+}
+var s = glm.mat4.create.toString().replace(/function/, "function x")
+s
+parser.parse(s)
+var f = parser.parse(s)[0][0]
+f
+var f = parser.parse(s)[1][0]
+d
+f
+var f = parser.parse(s)[1][0]
+f[0] === "defun"
+_
+var params = f[2]
+params
