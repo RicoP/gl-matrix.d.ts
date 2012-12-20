@@ -161,7 +161,7 @@ interface quat4 {
 	toMat4(quat : Float32Array, dest ?: Float32Array) : Float32Array;
 	slerp(quat : Float32Array, quat2 : Float32Array, slerp : number, dest ?: Float32Array) : Float32Array;
 	fromRotationMatrix(mat : Float32Array, dest ?: Float32Array) : Float32Array;
-	fromAxes(view : Float32Array, right : number, up : Float32Array, dest ?: Float32Array) : Float32Array;
+	fromAxes(view : Float32Array, right : Float32Array, up : Float32Array, dest ?: Float32Array) : Float32Array;
 	fromAngleAxis(angle : number, axis : Float32Array, dest ?: Float32Array) : Float32Array;
 	toAngleAxis(src ?: Float32Array, dest ?: Float32Array) : Float32Array;
 	str(quat : Float32Array) : string;
