@@ -1,3 +1,4 @@
 #!/bin/sh
 node src/printdoc.js > gl-matrix.d.ts
 tsc gl-matrix.d.ts 
+mv gl-matrix.d.ts ..
