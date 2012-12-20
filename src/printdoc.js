@@ -35,13 +35,13 @@ function stringify(obj, indent) {
 	return w + strings.join("\n" + w) + "\n"; 
 }
 
-function guessParamType(name) {
+function guessParamType(name, funcname) {
 	switch(name) {
 		case "m00": case "m01": case "m02": case "m03": 
 		case "m10": case "m11": case "m12": case "m13": 
 		case "m20": case "m21": case "m22": case "m23": 
 		case "m30": case "m31": case "m32": case "m33": 
-		case "top": case "bottom": case "left": case "right": 
+		case "top": case "bottom": case "left": 
 		case "near": case "far": case "znear": 
 		case "angle": case "fovy":  
 		case "aspect": case "number": 
@@ -62,6 +62,9 @@ function guessParamType(name) {
 		case "view": case "proj": 
 		case "viewport": case "quat2": 
 		return "Float32Array"; 
+
+		case "right": 
+		return funcname === 'fromAxes' ? 'Float32Array' : 'number'; 
 
 		default: 
 		return "any"; 
@@ -115,7 +118,7 @@ function printFunctionBody(name, func) {
 	}
 
 	var params     = f[2];
-	var paramTypes = params.map(guessParamType); 
+	var paramTypes = params.map(function(paramname) { return guessParamType(paramname, name) }); 
 	var optionals  = params.map(guessParamIsOptional); 
 	var funcReturn = guessFuncReturnType(name); 
 
