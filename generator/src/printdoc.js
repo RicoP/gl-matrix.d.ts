@@ -13,7 +13,7 @@ function stringify(obj, indent) {
 			var o = obj[k]; 
 			if(typeof o === "function") {
 				if(o.toString().indexOf("[native code]") !== -1) {
-					//make shure we don't parse anything odd. 
+					//make sure we don't parse anything odd. 
 					continue; 
 				}
 				else { 
