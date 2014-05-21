@@ -60,7 +60,7 @@ function guessParamType(name, funcname) {
 		case "up": case "center": case "eye": 
 		case "axis": case "quat": 
 		case "view": case "proj": 
-		case "viewport": case "quat2": 
+		case "viewport":
 		return "Float32Array"; 
 
 		case "right": 
@@ -151,7 +151,7 @@ try {
 	tree.push( printModule("vec2", glm.vec2, 0) ); 
 	tree.push( printModule("vec3", glm.vec3, 0) ); 
 	tree.push( printModule("vec4", glm.vec4, 0) ); 
-	tree.push( printModule("quat4", glm.quat4, 0) ); 
+	tree.push( printModule("quat", glm.quat, 0) ); 
 } catch(e) {
 	console.error(JSON.stringify(e)); 
 	throw e; 
