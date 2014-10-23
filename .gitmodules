@@ -1,0 +1,3 @@
+[submodule "generator/src/gl-matrix"]
+	path = generator/src/gl-matrix
+	url = git@github.com:toji/gl-matrix.git
